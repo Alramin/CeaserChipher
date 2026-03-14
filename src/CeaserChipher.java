@@ -6,7 +6,7 @@ import java.io.File;
 public class CeaserChipher {
 
 
-     static void main(String[] args) {
+    static void main(String[] args) {
 
 
         try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception ignored) {}
@@ -52,23 +52,23 @@ public class CeaserChipher {
 
     }
 
-    public static String encrypt(String text, int key) {
-        StringBuilder result = new StringBuilder();
-        String alphabetStr = new String(Alfavit.ALFAVIT);
 
-        for (char symbol : text.toLowerCase().toCharArray()) {
-            int index = alphabetStr.indexOf(symbol);
+
+    public static String encrypt(String text, int key) {
+        StringBuilder sb = new StringBuilder();
+        int len = Alfavit.ALFAVIT.length;
+
+        for (char symbol : text.toCharArray()) {
+            int index = Alfavit.ALFA_STR.indexOf(symbol);
             if (index != -1) {
-                // Вычисляем новый индекс с учетом сдвига
-                int newIndex = (index + key) % Alfavit.ALFAVIT.length;
-                // Обработка отрицательного ключа (для дешифровки)
-                if (newIndex < 0) newIndex += Alfavit.ALFAVIT.length;
-                result.append(Alfavit.ALFAVIT[newIndex]);
+                int newIndex = (index + key) % len;
+                if (newIndex < 0) newIndex += len;
+                sb.append(Alfavit.ALFAVIT[newIndex]);
             } else {
-                result.append(symbol); // Если символа нет в алфавите, оставляем, как есть
+                sb.append(symbol); // Символы вне алфавита (цифры, латиница) не меняем
             }
         }
-        return result.toString();
+        return sb.toString();
     }
 
     public static void runBruteForce(String text) {
